@@ -1,0 +1,9 @@
+.bigInput {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 2.8rem;
+  background-color: #e6e6e6;
+  color: #000;
+  font-weight: 500;
+}

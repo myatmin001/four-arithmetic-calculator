@@ -1,0 +1,54 @@
+.button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  flex-wrap: wrap;
+  height: 3.1rem;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #dcdcdc;
+  cursor: pointer;
+}
+
+.button-container:hover {
+  background-color: #d6d6d6;
+  border: 0.5px solid #9f9f9f;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.button-container:active {
+  background-color: #c9c9c9;
+}
+
+.otherStyle {
+  background-color: #eeeeee;
+}
+
+.equal {
+  background-color: #7cb1db;
+  color: #000;
+}
+
+.equal:hover {
+  background-color: #4599db;
+}
+
+.numberStyle {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.xStyle {
+  font-family: 'Charm', cursive;
+}
+
+.operatorStyle {
+  font-size: 30px;
+  font-weight: lighter;
+}
+
+.docAndPlusMinusStyle {
+  background-color: #fff;
+  font-weight: 600;
+}

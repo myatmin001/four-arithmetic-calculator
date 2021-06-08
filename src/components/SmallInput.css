@@ -1,0 +1,9 @@
+.smallInput {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  font-size: 1rem;
+  background-color: #e6e6e6;
+  color: #5c5c5c;
+  height: 5rem;
+}
