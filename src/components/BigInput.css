@@ -6,4 +6,10 @@
   background-color: #e6e6e6;
   color: #000;
   font-weight: 500;
+  height: 3.5rem;
+}
+
+.changeFontSize {
+  font-size: 1.8rem;
+  align-items: center;
 }

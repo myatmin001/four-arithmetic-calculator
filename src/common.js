@@ -36,13 +36,13 @@ export const isCE = (ceValue) => {
 export const calculation = (operators,prevVal,nxtVal) => {
     switch(operators){
         case OPERATORS.PLUS: 
-            return parseInt(prevVal) + parseInt(nxtVal);
+            return parseFloat(prevVal) + parseFloat(nxtVal);
         case OPERATORS.MINUS: 
-            return parseInt(prevVal) - parseInt(nxtVal);
+            return parseFloat(prevVal) - parseFloat(nxtVal);
         case OPERATORS.MULTIPLY: 
-            return parseInt(prevVal) * parseInt(nxtVal);
+            return parseFloat(prevVal) * parseFloat(nxtVal);
         case OPERATORS.DIVIDED: 
-            return parseInt(prevVal) / parseInt(nxtVal);
+            return parseFloat(prevVal) / parseFloat(nxtVal);
         default:
             console.log("Something Wrong");
     }
@@ -62,4 +62,21 @@ export const convertOperatorWordToSign = (operatorWord) => {
             return "";
 
     }
+}
+
+export const backspace = (value) => {
+    const str = value.toString();
+    if(str.length===1){
+        return '0';
+    }else{
+        return str.substring(0, str.length - 1);
+    }
+}
+
+export const separteWithCommas = (value) => {
+    const str = value.toString();
+    if (str.indexOf(',') > -1){
+        str.replace(',', '');
+    }
+    return str.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }

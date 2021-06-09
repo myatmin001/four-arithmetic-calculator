@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import './App.css';
-import { calculation, convertOperatorWordToSign } from "./common";
+import { backspace, calculation, convertOperatorWordToSign } from "./common";
 import BigInput from './components/BigInput';
 import Button from './components/Button';
 import SmallInput from './components/SmallInput';
@@ -21,11 +21,21 @@ class App extends Component {
 
   addToBigInput = (value) => {
     if(this.state.stillAlive) {
+      // eslint-disable-next-line
       this.state.inputVal = '0';
+      // eslint-disable-next-line
       this.state.stillAlive = false;
     }
-    this.setState({ inputVal: this.state.inputVal==='0'? value : this.state.inputVal + value });
+    if((this.state.inputVal + value).length < 17) {
+      this.setState({ inputVal: this.state.inputVal==='0'? value : this.state.inputVal + value });
+    }
   };
+
+  addDecimal = (value) => {
+    if(this.state.inputVal.indexOf(".") === -1){
+      this.setState({inputVal: this.state.inputVal + value});
+    }
+  }
 
   allClearInput = () => {
     this.setState({
@@ -38,36 +48,48 @@ class App extends Component {
     });
   }
 
+  clearCurrentInput = () => {
+    this.setState({inputVal: '0'});
+  }
+
+  clearWord = () => {
+    this.setState({inputVal: this.state.inputVal==='0' ? this.state.inputVal : backspace(this.state.inputVal)});
+  }
+
   plus = () => {
-    if(this.state.operator === OPERATORS.MINUS){
-      this.setState({inputVal: (this.state.inputVal * -1) + ""})
+    if(this.state.operator === OPERATORS.MINUS && this.state.preVal==='0'){
+      // eslint-disable-next-line
+      this.state.inputVal = (this.state.inputVal * -1) + "";
     }
     this.setState({preVal: this.state.inputVal,operator: OPERATORS.PLUS,stillAlive: true});
     this.setState({displayVal: this.state.inputVal + '+'});
   }
 
   minus = () => {
-    if(this.state.operator === OPERATORS.MINUS){
-      this.setState({inputVal: (this.state.inputVal * -1) + ""})
+    if(this.state.operator === OPERATORS.MINUS && this.state.preVal==='0'){
+      // eslint-disable-next-line
+      this.state.inputVal = (this.state.inputVal * -1) + "";
     }
     this.setState({preVal: this.state.inputVal,operator: OPERATORS.MINUS,stillAlive: true});
-    this.setState({displayVal: this.state.inputVal + '-'});
+    this.setState({displayVal: this.state.inputVal + '−'});
   }
 
   multiply = () => {
-    if(this.state.operator === OPERATORS.MINUS){
-      this.setState({inputVal: (this.state.inputVal * -1) + ""})
+    if(this.state.operator === OPERATORS.MINUS && this.state.preVal==='0'){
+      // eslint-disable-next-line
+      this.state.inputVal = (this.state.inputVal * -1) + "";
     }
     this.setState({preVal: this.state.inputVal,operator: OPERATORS.MULTIPLY,stillAlive: true});
-    this.setState({displayVal: this.state.inputVal + '*'});
+    this.setState({displayVal: this.state.inputVal + '×'});
   }
 
   divided = () => {
-    if(this.state.operator === OPERATORS.MINUS){
-      this.setState({inputVal: (this.state.inputVal * -1) + ""})
+    if(this.state.operator === OPERATORS.MINUS && this.state.preVal==='0'){
+      // eslint-disable-next-line
+      this.state.inputVal = (this.state.inputVal * -1) + "";
     }
     this.setState({preVal: this.state.inputVal,operator: OPERATORS.DIVIDED,stillAlive: true});
-    this.setState({displayVal: this.state.inputVal + '/'});
+    this.setState({displayVal: this.state.inputVal + '÷'});
   }
 
   plusMinusConvert = () => {
@@ -77,12 +99,16 @@ class App extends Component {
 
   equal = () => {
     if(this.state.preVal === ""){
+      // eslint-disable-next-line
       this.state.preVal=this.state.inputVal;
     }else{
+      // eslint-disable-next-line
       this.state.nxtVal = this.state.inputVal;
     }
     this.setState({displayVal: this.state.preVal + convertOperatorWordToSign(this.state.operator) + this.state.nxtVal + '='});
-    this.setState({inputVal: calculation(this.state.operator,this.state.preVal,this.state.nxtVal), stillAlive: true, preVal: ''});
+    if(this.state.nxtVal!==""){
+      this.setState({inputVal: calculation(this.state.operator,this.state.preVal,this.state.nxtVal), stillAlive: true, preVal: ''});
+    }
   }
 
   render(){
@@ -93,9 +119,9 @@ class App extends Component {
           <BigInput inputVal={this.state.inputVal}/>
           <div className="row">
             <Button value="" handleClick={this.disable}>%</Button>
-            <Button value="CE" handleClick={this.disable}>CE</Button>
+            <Button value="CE" handleClick={this.clearCurrentInput}>CE</Button>
             <Button value="" handleClick={this.allClearInput}>C</Button>
-            <Button value="" handleClick={this.disable}><i className="far fa-times-circle"></i></Button>
+            <Button value="" handleClick={this.clearWord}><i className="far fa-times-circle"></i></Button>
           </div>
           <div className="row">
             <Button value="1/x" handleClick={this.disable}>1/x</Button>
@@ -124,7 +150,7 @@ class App extends Component {
           <div className="row">
             <Button value="+/-" handleClick={this.plusMinusConvert}><sup>+</sup><p>/</p><sub>-</sub></Button>
             <Button value="0" handleClick={this.addToBigInput}>0</Button>
-            <Button value="." handleClick={this.disable}>.</Button>
+            <Button value="." handleClick={this.addDecimal}>.</Button>
             <Button value="=" handleClick={this.equal}>=</Button>
           </div>
         </div>
